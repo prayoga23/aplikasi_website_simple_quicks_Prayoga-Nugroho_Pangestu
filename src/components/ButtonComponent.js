@@ -1,16 +1,14 @@
 import React from 'react';
 
-const ButtonComponent = ({ imageSrc, altText, onClick, styleClasses, label }) => {
+const ButtonComponent = ({ Icon, label, onClick, styleClasses }) => {
   return (
-    <div className={`flex flex-col items-center ${styleClasses}`}>
-      {label && <span className="mb-2 ">{label}</span>}
-      <button
-        className={`rounded-full transition-transform`}
-        onClick={onClick}
-      >
-        <img src={imageSrc} alt={altText} className="w-100 h-100" />
-      </button>
-    </div>
+    <button
+      onClick={onClick}
+      className={`p-3 rounded-full bg-black shadow-lg hover:bg-gray-800 transition-all duration-300 ${styleClasses}`}
+    >
+      <Icon className="h-6 w-6 text-white" />
+      {label && <span className="ml-2 text-white">{label}</span>}
+    </button>
   );
 };
 

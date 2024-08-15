@@ -1,49 +1,68 @@
 import React, { useState } from 'react';
 import ButtonComponent from './ButtonComponent';
 import ChatBox from './ChatBox';
-import lightningIcon from '../assets/img/lightning-icon.png';
-import inboxIcon from '../assets/img/inbox-icon.png';
-import taskIcon from '../assets/img/task-icon.png'; // Tambahkan ikon chat di sini
+import BoltIcon from '@mui/icons-material/Bolt';
+import InboxIcon from '@mui/icons-material/Inbox';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import TaskBox from './TaskBox';
 
 const FloatingMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const [isInboxActive, setIsInboxActive] = useState(false);
+  const [isTaskOpen, setIsTaskOpen] = useState(false);
 
   const toggleMenu = () => {
-    setIsOpen(!isOpen);
+    if (isChatOpen || isTaskOpen) {
+      setIsChatOpen(false);
+      setIsInboxActive(false);
+      setIsTaskOpen(false);
+    } else {
+      setIsOpen(!isOpen);
+    }
   };
 
   const toggleChatbox = () => {
     setIsChatOpen(!isChatOpen);
+    setIsInboxActive(!isInboxActive);
+    setIsTaskOpen(false);
+    setIsOpen(false);
+  };
+
+  const toggleTaskbox = () => {
+    setIsTaskOpen(!isTaskOpen);
+    setIsChatOpen(false);
+    setIsInboxActive(false);
+    setIsOpen(false);
   };
 
   return (
     <div className="group fixed bottom-5 right-5 p-2 flex items-end justify-end">
-      {/* ChatBox yang akan muncul saat tombol di klik */}
       {isChatOpen && <ChatBox onClose={toggleChatbox} />}
+      {isTaskOpen && <TaskBox onClose={toggleTaskbox} />}
       
-       {/* Tombol Task */}
       <ButtonComponent
-        imageSrc={taskIcon}
-        altText="Task"
+        Icon={AssignmentIcon}
         label="Task"
-        styleClasses={`${isOpen ? 'transform translate-x-[-50px]' : 'hidden'}`}
+        onClick={toggleTaskbox}
+        styleClasses={`${
+          isOpen || isChatOpen || isTaskOpen ? 'transform translate-x-[-40px]' : 'hidden'
+        } ${isTaskOpen ? 'bg-green-500' : ''}`}
       />
 
-      {/* Tombol Inbox */}
       <ButtonComponent
-        imageSrc={inboxIcon}
-        altText="Inbox"
+        Icon={InboxIcon}
         label="Inbox"
         onClick={toggleChatbox}
-        styleClasses={`${isOpen ? 'transform translate-x-[-25px]' : 'hidden'}`}
+        styleClasses={`${isInboxActive ? 'bg-purple-500' : ''} ${
+          (isOpen || isChatOpen) && !isTaskOpen ? 'transform translate-x-[-25px]' : 'hidden'
+        }`}
       />
       
-      {/* Tombol utama untuk membuka/menutup menu */}
       <ButtonComponent
-        imageSrc={lightningIcon} // Ubah sesuai ikon yang Anda inginkan
-        altText="Menu"
+        Icon={BoltIcon}
         onClick={toggleMenu}
+        styleClasses={`${isChatOpen || isTaskOpen ? 'hidden' : ''} bg-blue-500 hover:bg-blue-600`}
       /> 
     </div>
   );
