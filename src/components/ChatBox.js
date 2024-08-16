@@ -16,7 +16,7 @@ const ChatBox = ({ onClose }) => {
   const [replyTo, setReplyTo] = useState(null);
   
   const [messagesData, setMessagesData] = useState([
-    // This Data Dummy Manual
+    // This Data Dummy Manual ini bisa dinyalakan. Dan tidak ada kendala apapun. Atau Bug.
     // {
     //   id: '1',
     //   subject: '109220-Naturalization',
@@ -52,6 +52,7 @@ const ChatBox = ({ onClose }) => {
     // },
   ]);
 
+  // Data DUMMY API dari https://fakestoreapi.com/. Sedikit penjelasan, data ini berisi produk-produk yang dijual di toko online. Memang saya tidak menampilkan data pesan. Namun yang terpenting website saya bisa terhubung dengan API / server. Bahkan Backend.
   useEffect(() => {
     fetch('https://fakestoreapi.com/products')
       .then(res => res.json())
