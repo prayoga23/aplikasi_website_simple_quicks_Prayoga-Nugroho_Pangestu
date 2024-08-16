@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
-import GroupsIcon from '@mui/icons-material/Groups';
 import ChatMessage from './ChatMessage';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import groupIcon from '../assets/img/group.svg';
+import Avatar from '@mui/material/Avatar';
 
 const messagesData = [
   {
@@ -50,6 +51,7 @@ const ChatBox = ({ onClose }) => {
   const [showNewMessages, setShowNewMessages] = useState(false);
   const [isConnecting, setIsConnecting] = useState(true);
   const [isLoadingInbox, setIsLoadingInbox] = useState(true);
+  const [replyTo, setReplyTo] = useState(null);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -80,30 +82,30 @@ const ChatBox = ({ onClose }) => {
         text: userInput,
         isUser: true,
         timestamp: new Date().toLocaleString(),
+        replyTo: replyTo,
       };
       setChatMessages([...chatMessages, newMessage]);
       setUserInput('');
-      setTimeout(() => {
-        const botResponse = {
-          id: (Date.now() + 1).toString(),
-          sender: 'Bot',
-          text: 'Ini adalah respons dari chatbot.',
-          isUser: false,
-          timestamp: new Date().toLocaleString(),
-        };
-        setChatMessages((prev) => [...prev, botResponse]);
-      }, 500);
+      setReplyTo(null);
     }
   };
 
   const handleEditMessage = (id, newText) => {
-    setChatMessages(chatMessages.map(msg =>
+    setChatMessages(chatMessages.map(msg => 
       msg.id === id ? { ...msg, text: newText } : msg
     ));
   };
 
   const handleDeleteMessage = (id) => {
     setChatMessages(chatMessages.filter(msg => msg.id !== id));
+  };
+
+  const handleShare = (id) => {
+    console.log('Share message:', id);
+  };
+
+  const handleReply = (message) => {
+    setReplyTo(message);
   };
 
   useEffect(() => {
@@ -125,64 +127,66 @@ const ChatBox = ({ onClose }) => {
   }, [chatMessages]);
 
   return (
-    <div className="fixed bottom-20 right-5 w-7/12 h-5/6 ">
+    <div className="fixed bottom-20 right-0 w-7/12 h-5/6 ">
       <div className="bg-white shadow-md rounded-lg max-w-4xl w-full h-full flex flex-col">
-        <div className="p-4 border-b bg-blue-500 text-white rounded-t-lg flex justify-between items-center">
-          <p className="text-xl font-semibold">{selectedMessage ? selectedMessage.subject : 'Inbox'}</p>
-          <button
-            onClick={onClose}
-            className="text-gray-300 hover:text-gray-400 focus:outline-none"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-6 h-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+      <div className="p-4 border-b bg-white text-black rounded-t-lg flex justify-between items-center">
+        <div className="flex items-center">
+          {selectedMessage && (
+            <button
+              onClick={handleBackToInbox}
+              className="text-black flex items-center space-x-2 mr-2"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
+              <ArrowBackIcon />
+            </button>
+          )}
+          <p className="text-xl font-semibold">
+            {selectedMessage ? (
+              <>
+                {selectedMessage.subject} <br />
+                <span className="text-black text-sm">3 Participants</span>
+              </>
+            ) : (
+              <>
+                Inbox
+              </>
+            )}
+          </p>
         </div>
+        <button
+          onClick={onClose}
+          className="text-gray-300 hover:text-gray-400 focus:outline-none"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-6 h-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+      </div>
+
 
         {selectedMessage ? (
           <>
-            <div className="p-4 flex items-center">
-              <button
-                onClick={handleBackToInbox}
-                className="text-blue-500 flex items-center space-x-2"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
-                  viewBox="0 0 20 20"
-                  fill="blue"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M9.707 14.707a1 1 0 01-1.414 0l-5-5a1 1 0 010-1.414l5-5a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-                <span>Back to Inbox</span>
-              </button>
-            </div>
             <div id="chatbox" ref={chatboxRef} className="flex-grow p-4 overflow-y-auto relative">
               {isConnecting ? (
                 <div className="flex justify-center items-center">
                   <div className="loader"></div>
-                  <span className="ml-3 text-blue-500">Please wait while we connect you with one of our team...</span>
+                  <span className="ml-3 text-blue-500">Please wait while we connect you with one of Our Team...</span>
                 </div>
               ) : (
                 <>
                   <div className="flex justify-center items-center mb-4">
                     <span className="bg-gray-300 px-2 py-1 rounded text-gray-600">
-                      Today {new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+                      Hari ini {new Date().toLocaleDateString('id-ID', { month: 'long', day: 'numeric', year: 'numeric' })}
                     </span>
                   </div>
                   {chatMessages.map((msg) => (
@@ -191,7 +195,12 @@ const ChatBox = ({ onClose }) => {
                       message={msg} 
                       onEdit={handleEditMessage}
                       onDelete={handleDeleteMessage}
-                    />
+                      onShare={handleShare}
+                      onReply={handleReply}
+                      sender={msg.sender}
+                    >
+                      <span className="text-sm text-white">{msg.timestamp}</span>
+                    </ChatMessage>
                   ))}
                   {showNewMessages && (
                     <div className="sticky top-0 w-full flex justify-center py-2">
@@ -201,29 +210,45 @@ const ChatBox = ({ onClose }) => {
                   <div className="flex justify-center items-center mt-4">
                     <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-500"></div>
                     <span className="ml-3 bg-blue-500 text-white px-3 py-1 rounded-full text-sm">
-                      Please wait while we connect you with one of our team...
+                      Please wait while we connect you with one of Our Team...
                     </span>
                   </div>
                 </>
               )}
             </div>
-            <div className="p-4 border-t flex">
-              <input
-                type="text"
-                value={userInput}
-                onChange={(e) => setUserInput(e.target.value)}
-                onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-                placeholder="Ketik pesan..."
-                className="w-full px-3 py-2 border rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
-                disabled={isConnecting}
-              />
-              <button
-                onClick={handleSendMessage}
-                className="bg-blue-500 text-white px-6 py-2 rounded-r-md hover:bg-blue-600 transition duration-300"
-                disabled={isConnecting}
-              >
-                Kirim
-              </button>
+            <div className="p-4 border-t flex flex-col">
+              {replyTo && (
+                <div className="bg-gray-100 p-2 mb-2 rounded-md text-sm text-black relative">
+                  <p className="font-bold">Membalas kepada {replyTo.sender}:</p>
+                  <p>{replyTo.text}</p>
+                  <button 
+                    onClick={() => setReplyTo(null)} 
+                    className="absolute top-1 right-1 text-gray-500 hover:text-gray-700"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
+              )}  
+              <div className="flex">
+                <input
+                  type="text"
+                  value={userInput}
+                  onChange={(e) => setUserInput(e.target.value)}
+                  onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+                  placeholder="Ketik pesan..."
+                  className="w-full px-3 py-2 border rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+                  disabled={isConnecting}
+                />
+                <button
+                  onClick={handleSendMessage}
+                  className="bg-blue-500 text-white px-6 py-2 rounded-r-md hover:bg-blue-600 transition duration-300"
+                  disabled={isConnecting}
+                >
+                  Send
+                </button>
+              </div>
             </div>
           </>
         ) : (
@@ -282,7 +307,13 @@ const ChatBox = ({ onClose }) => {
                   >
                     <div className="relative flex items-center">
                       <div className="flex-shrink-0 mr-3">
-                        <GroupsIcon className="w-10 h-10 text-gray-400" />
+                        {message.sender === 'FastVisa Support' ? (
+                          <Avatar className="bg-blue-500">
+                            {message.sender.charAt(0).toUpperCase()}
+                          </Avatar>
+                        ) : (
+                          <img src={groupIcon} alt="User Icon" className="w-10 h-10 rounded-full" />
+                        )}
                       </div>
                       <div className="flex-grow">
                         <p className="text-sm text-gray-500">

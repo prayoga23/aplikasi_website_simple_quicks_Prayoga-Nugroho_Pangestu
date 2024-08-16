@@ -7,7 +7,6 @@ const ButtonComponent = ({ Icon, label, onClick, styleClasses }) => {
       className={`p-3 rounded-full bg-black shadow-lg hover:bg-gray-800 transition-all duration-300 ${styleClasses}`}
     >
       <Icon className="h-6 w-6 text-white" />
-      {label && <span className="ml-2 text-white">{label}</span>}
     </button>
   );
 };
