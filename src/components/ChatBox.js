@@ -53,7 +53,7 @@ const ChatBox = ({ onClose }) => {
   const [replyTo, setReplyTo] = useState(null);
   const [messagesData, setMessagesData] = useState([]); // Tambahkan ini
 
- // Fetch data dari API
+ // Data Dummy /Fetch data dari API https://fakestoreapi.com/
  useEffect(() => {
   fetch('https://fakestoreapi.com/products')
     .then(res => res.json())
