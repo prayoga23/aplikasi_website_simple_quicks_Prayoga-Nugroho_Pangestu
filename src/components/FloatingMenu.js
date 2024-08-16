@@ -54,13 +54,13 @@ const FloatingMenu = () => {
   );
 
   return (
-    <div className="group fixed bottom-5 right-5 p-2 flex items-end justify-end space-x-2">
+    <div className="group fixed bottom-5 right-5 p-2 flex items-end justify-end space-x-4">
       {isChatOpen && <ChatBox onClose={closeChatbox} />}
       {isTaskOpen && <TaskBox onClose={closeTaskbox} />}
       
       {isOpen && (
         <>
-          <div className={`flex flex-col items-center transition-all duration-300 ${isTaskOpen ? 'order-3' : 'order-1'}`}>
+          <div className={`flex flex-col items-center transition-all duration-300 ${isTaskOpen ? 'order-3' : 'order-1'} mr-4`}>
             {showLabels && <span className="mb-1 text-sm">Task</span>}
             <ButtonComponent
               Icon={isTaskOpen ? ChromeReaderModeIcon : TaskIcon}
@@ -69,7 +69,7 @@ const FloatingMenu = () => {
               styleClasses={`${isTaskOpen ? 'bg-yellow-500 text-white' : 'bg-white'} w-12 h-12`}
             />
           </div>
-          <div className={`flex flex-col items-center transition-all duration-300 ${isChatOpen ? 'order-3' : 'order-2'}`}>
+          <div className={`flex flex-col items-center transition-all duration-300 ${isChatOpen ? 'order-3' : 'order-2'} mr-4`}>
             {showLabels && <span className="mb-1 text-sm">Inbox</span>}
             <ButtonComponent
               Icon={isChatOpen ? ForumIcon : InboxIcon}

@@ -64,42 +64,42 @@ const ChatMessage = ({ message, onEdit, onDelete, onShare, onReply, sender }) =>
         >
           <MoreVertIcon fontSize="small" />
         </button>
+        {showOptions && (
+          <div className="absolute top-0 right-0 mt-8 bg-white shadow-md rounded-lg flex flex-col">
+            {message.isUser ? (
+              <>
+                <button
+                  className="text-sm text-blue-500 p-2 hover:bg-gray-100"
+                  onClick={handleEdit}
+                >
+                  Edit
+                </button>
+                <button
+                  className="text-sm text-red-500 p-2 hover:bg-gray-100"
+                  onClick={handleDelete}
+                >
+                  Hapus
+                </button>
+              </>
+            ) : (
+              <>
+                <button
+                  className="text-sm text-blue-500 p-2 hover:bg-gray-100"
+                  onClick={handleShare}
+                >
+                  Share
+                </button>
+                <button
+                  className="text-sm text-blue-500 p-2 hover:bg-gray-100"
+                  onClick={handleReply}
+                >
+                  Reply
+                </button>
+              </>
+            )}
+          </div>
+        )}
       </div>
-      {showOptions && (
-        <div className="absolute top-0 right-0 mt-8 bg-white shadow-md rounded-lg flex flex-col">
-          {message.isUser ? (
-            <>
-              <button
-                className="text-sm text-blue-500 p-2 hover:bg-gray-100"
-                onClick={handleEdit}
-              >
-                Edit
-              </button>
-              <button
-                className="text-sm text-red-500 p-2 hover:bg-gray-100"
-                onClick={handleDelete}
-              >
-                Hapus
-              </button>
-            </>
-          ) : (
-            <>
-              <button
-                className="text-sm text-blue-500 p-2 hover:bg-gray-100"
-                onClick={handleShare}
-              >
-                Bagikan
-              </button>
-              <button
-                className="text-sm text-blue-500 p-2 hover:bg-gray-100"
-                onClick={handleReply}
-              >
-                Balas
-              </button>
-            </>
-          )}
-        </div>
-      )}
     </div>
   );
 };
