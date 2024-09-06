@@ -173,6 +173,12 @@ const TaskBox = ({ onClose }) => {
                     <CreateIcon fontSize="small" className="mr-2" />
                     Add Task
                   </button>
+                  <button 
+                    className="bg-red-500 text-white px-4 py-2 rounded flex items-center ml-2"
+                    onClick={() => setIsAddingNewTask(false)} // Cancel button functionality
+                  >
+                    Cancel
+                  </button>
                 </div>
               </div>
             )}
