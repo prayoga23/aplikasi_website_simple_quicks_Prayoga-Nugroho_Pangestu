@@ -68,7 +68,7 @@ const ChatBox = ({ onClose }) => {
       isUnread: false,
     },
   ]);
-   //Data Dummy dari API Website Fakestoreapi. Uji coba tersebut digunakan untuk mencoba apakah sebuah sistem website dimasukkan server.
+   //Data Dummy dari API Website Fakestoreapi. Uji coba ini digunakan untuk mencoba apakah sebuah sistem website bisa dimasukkan server. Jika bisa maka nanti bisa di program dalam backend
    useEffect(()=> {
    fetch('https://fakestoreapi.com/products')
    .then(res => res.json())
