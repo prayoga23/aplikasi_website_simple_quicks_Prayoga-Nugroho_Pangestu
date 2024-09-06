@@ -4,43 +4,6 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import groupIcon from '../assets/img/group.svg';
 import Avatar from '@mui/material/Avatar';
 
-// const messagesData = [
-//   {
-//     id: '1',
-//     subject: '109220-Naturalization',
-//     sender: 'Cameron Phillips',
-//     date: 'Senin, 1 Januari 2021 19:10',
-//     message: 'Please check this out!',
-//     isUnread: true,
-// },
-// {
-//   id: '2',
-//   subject: 'Jeannette Moraima Guaman Chamba [Hutto Follow Up - Brief Service]',
-//   sender: 'Ellen',
-//   date: 'Minggu, 6 Februari 2021 10:45',
-//   message: 'Hey, please read.',
-//   isUnread: true,
-//   isNew: true,
-// },
-// {
-//   id: '3',
-//   subject: '8405-Diana SALAZAR MUNGUIA',
-//   sender: 'Cameron Phillips',
-//   date: '01/06/2021 12:19',
-//   message:
-//     "I understand your initial concerns and that's very valid, Elizabeth. But you...",
-//   isUnread: false,
-// },
-// {
-//   id: '4',
-//   subject: 'FastVisa Support',
-//   sender: 'FastVisa Support',
-//   date: '01/06/2021 12:19',
-//   message: 'Hey there! Welcome to your inbox.',
-//   isUnread: false,
-// },
-// ];
-
 const ChatBox = ({ onClose }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedMessage, setSelectedMessage] = useState(null);
@@ -50,27 +13,66 @@ const ChatBox = ({ onClose }) => {
   const [showNewMessages, setShowNewMessages] = useState(false);
   const [isConnecting, setIsConnecting] = useState(true);
   const [isLoadingInbox, setIsLoadingInbox] = useState(true);
-  const [replyTo, setReplyTo] = useState(null);
-  const [messagesData, setMessagesData] = useState([]); // Tambahkan ini
+  const [replyTo, setReplyTo] = useState(null); // Tambahkan ini
 
- // Fetch data dari API
- useEffect(() => {
-  fetch('https://fakestoreapi.com/products')
-    .then(res => res.json())
-    .then(json => {
-      const formattedData = json.map((item, index) => ({
-        id: item.id.toString(),
-        subject: item.title,
-        sender: item.category,
-        date: new Date().toLocaleDateString('id-ID', { month: 'long', day: 'numeric', year: 'numeric' }),
-        message: item.description,
-        isUnread: index % 2 === 0, // Tandai pesan sebagai belum dibaca secara bergantian
-        isNew: index % 3 === 0, // Tandai pesan sebagai baru secara bergantian
-      }));
-      setMessagesData(formattedData); // Perbarui state messagesData
-      setIsLoadingInbox(false);
-    });
-}, []);
+const [messagesData, setMessagesData] = useState([
+  {
+    id: '1',
+    subject: '109220-Naturalization',
+    sender: 'Cameron Phillips',
+    date: 'Senin, 1 Januari 2021 19:10',
+    message: 'Please check this out!',
+    isUnread: true,
+  },
+  { 
+    id: '2',
+    subject: 'Jeannette Moraima Guaman Chamba [Hutto Follow Up - Brief Service]',
+    sender: 'Ellen',
+    date: 'Minggu, 6 Februari 2021 10:45',
+    message: 'Hey, please read.',
+    isUnread: true,
+    isNew: true,
+  },
+  {
+    id: '3',
+    subject: '8405-Diana SALAZAR MUNGUIA',
+    sender: 'Cameron Phillips',
+    date: '01/06/2021 12:19',
+    message:
+      "I understand your initial concerns and that's very valid, Elizabeth. But you...",
+    isUnread: false,
+  },
+  {
+    id: '4',
+    subject: 'FastVisa Support',
+    sender: 'FastVisa Support',
+    date: '01/06/2021 12:19',
+    message: 'Hey there! Welcome to your inbox.',
+    isUnread: false,
+  },
+]);
+  // Fetch data dari API
+  useEffect(() => {
+    fetch('https://fakestoreapi.com/products')
+      .then(res => res.json())
+      .then(json => {
+        const formattedData = json.map((item, index) => ({
+          id: item.id.toString(),
+          subject: item.title,
+          sender: item.category,
+          date: new Date().toLocaleDateString('id-ID', { month: 'long', day: 'numeric', year: 'numeric' }),
+          message: item.description,
+          isUnread: index % 2 === 0,
+          isNew: index % 3 === 0, 
+        }));
+        setMessagesData(prevData => [...prevData, ...formattedData]);
+        setIsLoadingInbox(false);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+        setIsLoadingInbox(false);
+      });
+  }, []);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -148,50 +150,49 @@ const ChatBox = ({ onClose }) => {
   return (
     <div className="fixed bottom-20 right-5 w-7/12 h-5/6 bg-white shadow-lg rounded-lg overflow-hidden">
       <div className="bg-white shadow-md rounded-lg w-full h-full flex flex-col">
-      <div className="p-4 border-b bg-white text-black rounded-t-lg flex justify-between items-center">
-        <div className="flex items-center">
-          {selectedMessage && (
-            <button
-              onClick={handleBackToInbox}
-              className="text-black flex items-center space-x-2 mr-2"
-            >
-              <ArrowBackIcon />
-            </button>
-          )}
-          <p className="text-xl font-semibold">
-            {selectedMessage ? (
-              <>
-                {selectedMessage.subject} <br />
-                <span className="text-black text-sm">3 Participants</span>
-              </>
-            ) : (
-              <>
-                Inbox
-              </>
+        <div className="p-4 border-b bg-white text-black rounded-t-lg flex justify-between items-center">
+          <div className="flex items-center">
+            {selectedMessage && (
+              <button
+                onClick={handleBackToInbox}
+                className="text-black flex items-center space-x-2 mr-2"
+              >
+                <ArrowBackIcon />
+              </button>
             )}
-          </p>
-        </div>
-        <button
-          onClick={onClose}
-          className="text-gray-300 hover:text-gray-400 focus:outline-none"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-6 h-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
+            <p className="text-xl font-semibold">
+              {selectedMessage ? (
+                <>
+                  {selectedMessage.subject} <br />
+                  <span className="text-black text-sm">3 Participants</span>
+                </>
+              ) : (
+                <>
+                  Inbox
+                </>
+              )}
+            </p>
+          </div>
+          <button
+            onClick={onClose}
+            className="text-gray-300 hover:text-gray-400 focus:outline-none"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
-        </button>
-      </div>
-
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-6 h-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
 
         {selectedMessage ? (
           <>
