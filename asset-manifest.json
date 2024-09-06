@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/simple_quicks_Simpul_Tech_Prayoga-Nugroho_Pangestu/static/css/main.e97a0dac.css",
-    "main.js": "/simple_quicks_Simpul_Tech_Prayoga-Nugroho_Pangestu/static/js/main.2991975d.js",
+    "main.css": "/simple_quicks_Simpul_Tech_Prayoga-Nugroho_Pangestu/static/css/main.22b79e41.css",
+    "main.js": "/simple_quicks_Simpul_Tech_Prayoga-Nugroho_Pangestu/static/js/main.b408d4b2.js",
     "static/js/453.b63c61f8.chunk.js": "/simple_quicks_Simpul_Tech_Prayoga-Nugroho_Pangestu/static/js/453.b63c61f8.chunk.js",
     "static/media/group.svg": "/simple_quicks_Simpul_Tech_Prayoga-Nugroho_Pangestu/static/media/group.f807450bd77df029ed2a70711517aad6.svg",
     "index.html": "/simple_quicks_Simpul_Tech_Prayoga-Nugroho_Pangestu/index.html",
-    "main.e97a0dac.css.map": "/simple_quicks_Simpul_Tech_Prayoga-Nugroho_Pangestu/static/css/main.e97a0dac.css.map",
-    "main.2991975d.js.map": "/simple_quicks_Simpul_Tech_Prayoga-Nugroho_Pangestu/static/js/main.2991975d.js.map",
+    "main.22b79e41.css.map": "/simple_quicks_Simpul_Tech_Prayoga-Nugroho_Pangestu/static/css/main.22b79e41.css.map",
+    "main.b408d4b2.js.map": "/simple_quicks_Simpul_Tech_Prayoga-Nugroho_Pangestu/static/js/main.b408d4b2.js.map",
     "453.b63c61f8.chunk.js.map": "/simple_quicks_Simpul_Tech_Prayoga-Nugroho_Pangestu/static/js/453.b63c61f8.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.e97a0dac.css",
-    "static/js/main.2991975d.js"
+    "static/css/main.22b79e41.css",
+    "static/js/main.b408d4b2.js"
   ]
 }
