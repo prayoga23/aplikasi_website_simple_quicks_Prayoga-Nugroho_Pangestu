@@ -13,70 +13,89 @@ const ChatBox = ({ onClose }) => {
   const [showNewMessages, setShowNewMessages] = useState(false);
   const [isConnecting, setIsConnecting] = useState(true);
   const [isLoadingInbox, setIsLoadingInbox] = useState(true);
-  const [replyTo, setReplyTo] = useState(null); // Tambahkan ini
-
-const [messagesData, setMessagesData] = useState([
-  {
-    id: '1',
-    subject: '109220-Naturalization',
-    sender: 'Cameron Phillips',
-    date: 'Senin, 1 Januari 2021 19:10',
-    message: 'Please check this out!',
-    isUnread: true,
-  },
-  { 
-    id: '2',
-    subject: 'Jeannette Moraima Guaman Chamba [Hutto Follow Up - Brief Service]',
-    sender: 'Ellen',
-    date: 'Minggu, 6 Februari 2021 10:45',
-    message: 'Hey, please read.',
-    isUnread: true,
-    isNew: true,
-  },
-  {
-    id: '3',
-    subject: '8405-Diana SALAZAR MUNGUIA',
-    sender: 'Cameron Phillips',
-    date: '01/06/2021 12:19',
-    message:
-      "I understand your initial concerns and that's very valid, Elizabeth. But you...",
-    isUnread: false,
-  },
-  {
-    id: '4',
-    subject: 'FastVisa Support',
-    sender: 'FastVisa Support',
-    date: '01/06/2021 12:19',
-    message: 'Hey there! Welcome to your inbox.',
-    isUnread: false,
-  },
-]);
-  // Fetch data dari API
-  useEffect(() => {
-    fetch('https://fakestoreapi.com/products')
-      .then(res => res.json())
-      .then(json => {
-        const formattedData = json.map((item, index) => ({
-          id: item.id.toString(),
-          subject: item.title,
-          sender: item.category,
-          date: new Date().toLocaleDateString('id-ID', { month: 'long', day: 'numeric', year: 'numeric' }),
-          message: item.description,
-          isUnread: index % 2 === 0,
-          isNew: index % 3 === 0, 
-        }));
-        setMessagesData(prevData => [...prevData, ...formattedData]);
-        setIsLoadingInbox(false);
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-        setIsLoadingInbox(false);
-      });
-  }, []);
+  const [replyTo, setReplyTo] = useState(null);
+  
+  const [messagesData, setMessagesData] = useState([
+    // This data dummy Manual
+    {
+      id: '1',
+      subject: '109220-Naturalization',
+      sender: 'Cameron Phillips',
+      date: 'Senin, 1 Januari 2021 19:10',
+      message: 'Please check this out!',
+      isUnread: true,
+    },
+    {
+      id: '2',
+      subject: 'Jeannette Moraima Guaman Chamba [Hutto Follow Up - Brief Service]',
+      sender: 'Ellen',
+      date: 'Minggu, 6 Februari 2021 10:45',
+      message: 'Hey, please read.',
+      isUnread: true,
+      isNew: true,
+    },
+    {
+      id: '3',
+      subject: '8405-Diana SALAZAR MUNGUIA',
+      sender: 'Cameron Phillips',
+      date: '01/06/2021 12:19',
+      message: "I understand your initial concerns and that's very valid, Elizabeth. But you...",
+      isUnread: false,
+    },
+    {
+      id: '4',
+      subject: 'FastVisa Support',
+      sender: 'FastVisa Support',
+      date: '01/06/2021 12:19',
+      message: 'Hey there! Welcome to your inbox.',
+      isUnread: false,
+    },
+    // Data dummy Manual Terbaru
+    {
+      id: '5',
+      subject: 'Reminder Job Modification App',
+      sender: 'HR',
+      date: 'Selasa, 7 Maret 2023 14:00',
+      message: 'Jangan lupa untuk menghadiri rapat untuk membahas fitur baru di aplikasi.',
+      isUnread: true,
+    },
+    {
+      id: '6',
+      subject: 'Reminder: Meeting Tomorrow',
+      sender: 'HR',
+      date: 'Selasa, 7 Maret 2023 09:00',
+      message: 'Jangan lupa untuk menghadiri rapat besok.',
+      isUnread: false,
+    },
+  ]);
+   //Data Dummy dari API Website Fakestoreapi. Uji coba tersebut digunakan untuk mencoba apakah sebuah sistem website dimasukkan server.
+   useEffect(()=> {
+   fetch('https://fakestoreapi.com/products')
+   .then(res => res.json())
+   .then(json => {
+     const formattedData = json.map((item, index) => ({
+       id: item.id.toString(),
+       subject: item.title,
+       sender: item.category,
+       date: new Date().toLocaleDateString('id-ID', { month: 'long', day: 'numeric', year: 'numeric' }),
+       message: item.description,
+       isUnread: index % 2 === 0,
+       isNew: index % 3 === 0, 
+     }));
+     setMessagesData(prevData => [...prevData, ...formattedData]);
+     setIsLoadingInbox(false);
+   })
+   .catch(error => {
+     console.error('Error fetching data:', error);
+     setIsLoadingInbox(false);
+   });
+  },[]);
+  const [products, setProducts] = useState([]);
 
   const handleSearch = (e) => {
     e.preventDefault();
     console.log('Searching for:', searchQuery);
+    // Tambahkan logika pencarian di sini
   };
 
   const handleSelectMessage = (message) => {
@@ -141,6 +160,8 @@ const [messagesData, setMessagesData] = useState([
       setIsLoadingInbox(false);
     }, 1500);
 
+   
+
     return () => {
       clearTimeout(timer);
       clearTimeout(inboxTimer);
@@ -149,50 +170,51 @@ const [messagesData, setMessagesData] = useState([
 
   return (
     <div className="fixed bottom-20 right-5 w-7/12 h-5/6 bg-white shadow-lg rounded-lg overflow-hidden">
-      <div className="bg-white shadow-md rounded-lg w-full h-full flex flex-col">
-        <div className="p-4 border-b bg-white text-black rounded-t-lg flex justify-between items-center">
-          <div className="flex items-center">
-            {selectedMessage && (
-              <button
-                onClick={handleBackToInbox}
-                className="text-black flex items-center space-x-2 mr-2"
-              >
-                <ArrowBackIcon />
-              </button>
-            )}
-            <p className="text-xl font-semibold">
-              {selectedMessage ? (
-                <>
-                  {selectedMessage.subject} <br />
-                  <span className="text-black text-sm">3 Participants</span>
-                </>
-              ) : (
-                <>
-                  Inbox
-                </>
-              )}
-            </p>
-          </div>
-          <button
-            onClick={onClose}
-            className="text-gray-300 hover:text-gray-400 focus:outline-none"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-6 h-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+      <div className="bg-white shadow-md rounded-lg max-w-4xl w-full h-full flex flex-col">
+      <div className="p-4 border-b bg-white text-black rounded-t-lg flex justify-between items-center">
+        <div className="flex items-center">
+          {selectedMessage && (
+            <button
+              onClick={handleBackToInbox}
+              className="text-black flex items-center space-x-2 mr-2"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
+              <ArrowBackIcon />
+            </button>
+          )}
+          <p className="text-xl font-semibold">
+            {selectedMessage ? (
+              <>
+                {selectedMessage.subject} <br />
+                <span className="text-black text-sm">3 Participants</span>
+              </>
+            ) : (
+              <>
+                Inbox
+              </>
+            )}
+          </p>
         </div>
+        <button
+          onClick={onClose}
+          className="text-gray-300 hover:text-gray-400 focus:outline-none"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-6 h-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+      </div>
+
 
         {selectedMessage ? (
           <>
@@ -319,37 +341,51 @@ const [messagesData, setMessagesData] = useState([
                   <span className="ml-3 text-blue-500">Memuat pesan...</span>
                 </div>
               ) : (
-                messagesData.map((message) => (
-                  <div
-                    key={message.id}
-                    className={`p-4 border-b border-gray-200 cursor-pointer ${message.isUnread ? 'bg-gray-100 font-bold' : ''}`}
-                    onClick={() => handleSelectMessage(message)}
-                  >
-                    <div className="relative flex items-center">
-                      <div className="flex-shrink-0 mr-3">
-                        {message.sender === 'FastVisa Support' ? (
-                          <Avatar className="bg-blue-500">
-                            {message.sender.charAt(0).toUpperCase()}
-                          </Avatar>
-                        ) : (
-                          <img src={groupIcon} alt="User Icon" className="w-10 h-10 rounded-full" />
+                <>
+                  {messagesData.map((message) => (
+                    <div
+                      key={message.id}
+                      className={`p-4 border-b border-gray-200 cursor-pointer ${message.isUnread ? 'bg-gray-100 font-bold' : ''}`}
+                      onClick={() => handleSelectMessage(message)}
+                    >
+                      <div className="relative flex items-center">
+                        <div className="flex-shrink-0 mr-3">
+                          {message.sender === 'FastVisa Support' ? (
+                            <Avatar className="bg-blue-500">
+                              {message.sender.charAt(0).toUpperCase()}
+                            </Avatar>
+                          ) : (
+                            <img src={groupIcon} alt="User Icon" className="w-10 h-10 rounded-full" />
+                          )}
+                        </div>
+                        <div className="flex-grow">
+                          <p className="text-sm text-gray-500">
+                            {message.sender} - {message.subject}
+                          </p>
+                          <p className="text-sm text-gray-500">{message.date}</p>
+                          <p className="text-sm text-gray-900">{message.message}</p>
+                        </div>
+                        {message.isUnread && (
+                          <span className="absolute top-1 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full">
+                            {message.isNew ? '1' : '1'}
+                          </span>
                         )}
                       </div>
-                      <div className="flex-grow">
-                        <p className="text-sm text-gray-500">
-                          {message.sender} - {message.subject}
-                        </p>
-                        <p className="text-sm text-gray-500">{message.date}</p>
-                        <p className="text-sm text-gray-900">{message.message}</p>
-                      </div>
-                      {message.isUnread && (
-                        <span className="absolute top-1 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full">
-                          {message.isNew ? '1' : '1'}
-                        </span>
-                      )}
+                    </div>
+                  ))}
+                  <div className="mt-8">
+                    <h2 className="text-lg font-semibold mb-4">Produk Terkait</h2>
+                    <div className="grid grid-cols-2 gap-4">
+                      {products.map(product => (
+                        <div key={product.id} className="border p-4 rounded-lg">
+                          <img src={product.image} alt={product.title} className="w-full h-32 object-cover mb-2" />
+                          <h3 className="text-sm font-medium">{product.title}</h3>
+                          <p className="text-sm text-gray-600">${product.price}</p>
+                        </div>
+                      ))}
                     </div>
                   </div>
-                ))
+                </>
               )}
             </div>
           </>
