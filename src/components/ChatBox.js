@@ -16,43 +16,43 @@ const ChatBox = ({ onClose }) => {
   const [replyTo, setReplyTo] = useState(null);
   
   const [messagesData, setMessagesData] = useState([
-    // This Data Dummy Manual ini bisa dinyalakan. Dan tidak ada kendala apapun. Atau Bug.
-    // {
-    //   id: '1',
-    //   subject: '109220-Naturalization',
-    //   sender: 'Cameron Phillips',
-    //   date: 'Senin, 1 Januari 2021 19:10',
-    //   message: 'Please check this out!',
-    //   isUnread: true,
-    // },
-    // {
-    //   id: '2',
-    //   subject: 'Jeannette Moraima Guaman Chamba [Hutto Follow Up - Brief Service]',
-    //   sender: 'Ellen',
-    //   date: 'Minggu, 6 Februari 2021 10:45',
-    //   message: 'Hey, please read.',
-    //   isUnread: true,
-    //   isNew: true,
-    // },
-    // {
-    //   id: '3',
-    //   subject: '8405-Diana SALAZAR MUNGUIA',
-    //   sender: 'Cameron Phillips',
-    //   date: '01/06/2021 12:19',
-    //   message: "I understand your initial concerns and that's very valid, Elizabeth. But you...",
-    //   isUnread: false,
-    // },
-    // {
-    //   id: '4',
-    //   subject: 'FastVisa Support',
-    //   sender: 'FastVisa Support',
-    //   date: '01/06/2021 12:19',
-    //   message: 'Hey there! Welcome to your inbox.',
-    //   isUnread: false,
-    // },
+    // Data Dummy Manual diaktifkan
+    {
+      id: '1',
+      subject: '109220-Naturalization',
+      sender: 'Cameron Phillips',
+      date: 'Senin, 1 Januari 2021 19:10',
+      message: 'Please check this out!',
+      isUnread: true,
+    },
+    {
+      id: '2',
+      subject: 'Jeannette Moraima Guaman Chamba [Hutto Follow Up - Brief Service]',
+      sender: 'Ellen',
+      date: 'Minggu, 6 Februari 2021 10:45',
+      message: 'Hey, please read.',
+      isUnread: true,
+      isNew: true,
+    },
+    {
+      id: '3',
+      subject: '8405-Diana SALAZAR MUNGUIA',
+      sender: 'Cameron Phillips',
+      date: '01/06/2021 12:19',
+      message: "I understand your initial concerns and that's very valid, Elizabeth. But you...",
+      isUnread: false,
+    },
+    {
+      id: '4',
+      subject: 'FastVisa Support',
+      sender: 'FastVisa Support',
+      date: '01/06/2021 12:19',
+      message: 'Hey there! Welcome to your inbox.',
+      isUnread: false,
+    },
   ]);
 
-  // Data DUMMY API dari https://fakestoreapi.com/. Sedikit penjelasan, data ini berisi produk-produk yang dijual di toko online. Memang saya tidak menampilkan data pesan. Namun yang terpenting website saya bisa terhubung dengan API / server. Bahkan Backend.
+  // Data DUMMY API dari https://fakestoreapi.com/. Sedikit penjelasan, data ini berisi produk-produk yang dijual di toko online. Memang saya tidak menampilkan data pesan. Namun yang terpenting website saya bisa terhubung dengan API / server.
   useEffect(() => {
     fetch('https://fakestoreapi.com/products')
       .then(res => res.json())
@@ -74,6 +74,7 @@ const ChatBox = ({ onClose }) => {
         setIsLoadingInbox(false);
       });
   }, []);
+
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -149,8 +150,8 @@ const ChatBox = ({ onClose }) => {
   }, [chatMessages]);
 
   return (
-    <div className="fixed bottom-20 right-0 w-7/12 h-5/6 ">
-      <div className="bg-white shadow-md rounded-lg max-w-4xl w-full h-full flex flex-col">
+    <div className="fixed bottom-20 right-5 w-7/12 h-5/6 bg-white shadow-lg rounded-lg overflow-hidden">
+      <div className="bg-white shadow-md rounded-lg w-full h-full flex flex-col">
       <div className="p-4 border-b bg-white text-black rounded-t-lg flex justify-between items-center">
         <div className="flex items-center">
           {selectedMessage && (
