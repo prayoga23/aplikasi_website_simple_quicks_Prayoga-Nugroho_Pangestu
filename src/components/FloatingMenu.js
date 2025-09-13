@@ -54,28 +54,28 @@ const FloatingMenu = () => {
   );
 
   return (
-    <div className="group fixed bottom-5 right-5 p-2 flex items-end justify-end space-x-4">
+    <div className="group fixed bottom-4 right-4 sm:bottom-5 sm:right-5 p-2 flex items-end justify-end space-x-2 sm:space-x-4">
       {isChatOpen && <ChatBox onClose={closeChatbox} />}
       {isTaskOpen && <TaskBox onClose={closeTaskbox} />}
       
       {isOpen && (
         <>
-          <div className={`flex flex-col items-center transition-all duration-300 ${isTaskOpen ? 'order-3' : 'order-1'} mr-4`}>
-            {showLabels && <span className="mb-1 text-sm">Task</span>}
+          <div className={`flex flex-col items-center transition-all duration-300 ${isTaskOpen ? 'order-3' : 'order-1'} mr-2 sm:mr-4`}>
+            {showLabels && <span className="mb-1 text-xs sm:text-sm text-white">Task</span>}
             <ButtonComponent
               Icon={isTaskOpen ? ChromeReaderModeIcon : TaskIcon}
               label="Task"
               onClick={toggleTaskbox}
-              styleClasses={`${isTaskOpen ? 'bg-yellow-500 text-white' : 'bg-white'} w-12 h-12`}
+              styleClasses={`${isTaskOpen ? 'bg-yellow-500 text-white' : 'bg-white'} w-10 h-10 sm:w-12 sm:h-12`}
             />
           </div>
-          <div className={`flex flex-col items-center transition-all duration-300 ${isChatOpen ? 'order-3' : 'order-2'} mr-4`}>
-            {showLabels && <span className="mb-1 text-sm">Inbox</span>}
+          <div className={`flex flex-col items-center transition-all duration-300 ${isChatOpen ? 'order-3' : 'order-2'} mr-2 sm:mr-4`}>
+            {showLabels && <span className="mb-1 text-xs sm:text-sm text-white">Inbox</span>}
             <ButtonComponent
               Icon={isChatOpen ? ForumIcon : InboxIcon}
               label="Inbox"
               onClick={toggleChatbox}
-              styleClasses={`${isChatOpen ? 'bg-purple-500 text-white' : 'bg-white'} w-12 h-12`}
+              styleClasses={`${isChatOpen ? 'bg-purple-500 text-white' : 'bg-white'} w-10 h-10 sm:w-12 sm:h-12`}
             />
           </div>
         </>
@@ -85,7 +85,7 @@ const FloatingMenu = () => {
         <ButtonComponent
           Icon={BoltIcon}
           onClick={toggleMenu}
-          styleClasses="bg-blue-500 hover:bg-blue-600 order-3 w-12 h-12"
+          styleClasses="bg-blue-500 hover:bg-blue-600 order-3 w-10 h-10 sm:w-12 sm:h-12"
         />
       )}
     </div>

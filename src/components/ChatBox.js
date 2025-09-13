@@ -169,23 +169,23 @@ const ChatBox = ({ onClose }) => {
   }, [chatMessages]);
 
   return (
-    <div className="fixed bottom-20 right-5 w-7/12 h-5/6 bg-white shadow-lg rounded-lg overflow-hidden">
+    <div className="fixed bottom-16 sm:bottom-20 right-2 sm:right-5 w-[calc(100vw-1rem)] sm:w-7/12 h-[calc(100vh-8rem)] sm:h-5/6 bg-white shadow-lg rounded-lg overflow-hidden z-50">
       <div className="bg-white shadow-md rounded-lg max-w-4xl w-full h-full flex flex-col">
-      <div className="p-4 border-b bg-white text-black rounded-t-lg flex justify-between items-center">
-        <div className="flex items-center">
+      <div className="p-3 sm:p-4 border-b bg-white text-black rounded-t-lg flex justify-between items-center">
+        <div className="flex items-center flex-1 min-w-0">
           {selectedMessage && (
             <button
               onClick={handleBackToInbox}
-              className="text-black flex items-center space-x-2 mr-2"
+              className="text-black flex items-center space-x-2 mr-2 flex-shrink-0"
             >
               <ArrowBackIcon />
             </button>
           )}
-          <p className="text-xl font-semibold">
+          <p className="text-lg sm:text-xl font-semibold truncate">
             {selectedMessage ? (
               <>
-                {selectedMessage.subject} <br />
-                <span className="text-black text-sm">3 Participants</span>
+                <span className="block truncate">{selectedMessage.subject}</span>
+                <span className="text-black text-xs sm:text-sm">3 Participants</span>
               </>
             ) : (
               <>
@@ -258,16 +258,16 @@ const ChatBox = ({ onClose }) => {
                 </>
               )}
             </div>
-            <div className="p-4 border-t flex flex-col">
+            <div className="p-3 sm:p-4 border-t flex flex-col">
               {replyTo && (
-                <div className="bg-gray-100 p-2 mb-2 rounded-md text-sm text-black relative">
+                <div className="bg-gray-100 p-2 mb-2 rounded-md text-xs sm:text-sm text-black relative">
                   <p className="font-bold">Membalas kepada {replyTo.sender}:</p>
-                  <p>{replyTo.text}</p>
+                  <p className="line-clamp-2">{replyTo.text}</p>
                   <button 
                     onClick={() => setReplyTo(null)} 
                     className="absolute top-1 right-1 text-gray-500 hover:text-gray-700"
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 sm:h-4 sm:w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                     </svg>
                   </button>
@@ -280,12 +280,12 @@ const ChatBox = ({ onClose }) => {
                   onChange={(e) => setUserInput(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
                   placeholder="Ketik pesan..."
-                  className="w-full px-3 py-2 border rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+                  className="w-full px-2 sm:px-3 py-2 text-sm sm:text-base border rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
                   disabled={isConnecting}
                 />
                 <button
                   onClick={handleSendMessage}
-                  className="bg-blue-500 text-white px-6 py-2 rounded-r-md hover:bg-blue-600 transition duration-300"
+                  className="bg-blue-500 text-white px-4 sm:px-6 py-2 rounded-r-md hover:bg-blue-600 transition duration-300 text-sm sm:text-base"
                   disabled={isConnecting}
                 >
                   Send
@@ -295,14 +295,14 @@ const ChatBox = ({ onClose }) => {
           </>
         ) : (
           <>
-            <form onSubmit={handleSearch} className="w-full mx-auto p-4">
+            <form onSubmit={handleSearch} className="w-full mx-auto p-3 sm:p-4">
               <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">
                 Search
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                   <svg
-                    className="w-5 h-5 text-gray-500 dark:text-gray-400"
+                    className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500 dark:text-gray-400"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -320,7 +320,7 @@ const ChatBox = ({ onClose }) => {
                 <input
                   type="search"
                   id="default-search"
-                  className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="block w-full p-3 sm:p-4 ps-8 sm:ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Cari pesan..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
@@ -328,59 +328,59 @@ const ChatBox = ({ onClose }) => {
                 />
                 <button
                   type="submit"
-                  className="text-white absolute end-2.5 bottom-2.5 bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  className="text-white absolute end-2 bottom-2 sm:end-2.5 sm:bottom-2.5 bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-xs sm:text-sm px-3 py-1.5 sm:px-4 sm:py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 >
                   Cari
                 </button>
               </div>
             </form>
-            <div className="overflow-y-auto h-[calc(100%-8rem)] p-4">
+            <div className="overflow-y-auto h-[calc(100%-8rem)] p-3 sm:p-4">
               {isLoadingInbox ? (
                 <div className="flex justify-center items-center h-full">
-                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
-                  <span className="ml-3 text-blue-500">Memuat pesan...</span>
+                  <div className="animate-spin rounded-full h-8 w-8 sm:h-12 sm:w-12 border-b-2 border-blue-500"></div>
+                  <span className="ml-2 sm:ml-3 text-blue-500 text-sm sm:text-base">Memuat pesan...</span>
                 </div>
               ) : (
                 <>
                   {messagesData.map((message) => (
                     <div
                       key={message.id}
-                      className={`p-4 border-b border-gray-200 cursor-pointer ${message.isUnread ? 'bg-gray-100 font-bold' : ''}`}
+                      className={`p-3 sm:p-4 border-b border-gray-200 cursor-pointer ${message.isUnread ? 'bg-gray-100 font-bold' : ''}`}
                       onClick={() => handleSelectMessage(message)}
                     >
                       <div className="relative flex items-center">
-                        <div className="flex-shrink-0 mr-3">
+                        <div className="flex-shrink-0 mr-2 sm:mr-3">
                           {message.sender === 'FastVisa Support' ? (
-                            <Avatar className="bg-blue-500">
+                            <Avatar className="bg-blue-500 w-8 h-8 sm:w-10 sm:h-10">
                               {message.sender.charAt(0).toUpperCase()}
                             </Avatar>
                           ) : (
-                            <img src={groupIcon} alt="User Icon" className="w-10 h-10 rounded-full" />
+                            <img src={groupIcon} alt="User Icon" className="w-8 h-8 sm:w-10 sm:h-10 rounded-full" />
                           )}
                         </div>
-                        <div className="flex-grow">
-                          <p className="text-sm text-gray-500">
+                        <div className="flex-grow min-w-0">
+                          <p className="text-xs sm:text-sm text-gray-500 truncate">
                             {message.sender} - {message.subject}
                           </p>
-                          <p className="text-sm text-gray-500">{message.date}</p>
-                          <p className="text-sm text-gray-900">{message.message}</p>
+                          <p className="text-xs sm:text-sm text-gray-500">{message.date}</p>
+                          <p className="text-xs sm:text-sm text-gray-900 line-clamp-2">{message.message}</p>
                         </div>
                         {message.isUnread && (
-                          <span className="absolute top-1 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full">
+                          <span className="absolute top-1 right-2 bg-red-500 text-white text-xs px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-full">
                             {message.isNew ? '1' : '1'}
                           </span>
                         )}
                       </div>
                     </div>
                   ))}
-                  <div className="mt-8">
-                    <h2 className="text-lg font-semibold mb-4">Produk Terkait</h2>
-                    <div className="grid grid-cols-2 gap-4">
+                  <div className="mt-6 sm:mt-8">
+                    <h2 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Produk Terkait</h2>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                       {products.map(product => (
-                        <div key={product.id} className="border p-4 rounded-lg">
-                          <img src={product.image} alt={product.title} className="w-full h-32 object-cover mb-2" />
-                          <h3 className="text-sm font-medium">{product.title}</h3>
-                          <p className="text-sm text-gray-600">${product.price}</p>
+                        <div key={product.id} className="border p-3 sm:p-4 rounded-lg">
+                          <img src={product.image} alt={product.title} className="w-full h-24 sm:h-32 object-cover mb-2" />
+                          <h3 className="text-xs sm:text-sm font-medium line-clamp-2">{product.title}</h3>
+                          <p className="text-xs sm:text-sm text-gray-600">${product.price}</p>
                         </div>
                       ))}
                     </div>

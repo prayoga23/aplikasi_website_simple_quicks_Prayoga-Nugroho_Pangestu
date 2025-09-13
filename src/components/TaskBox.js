@@ -97,11 +97,11 @@ const TaskBox = ({ onClose }) => {
   };
 
   return (
-    <div className="fixed bottom-20 right-5 w-7/12 h-5/6 bg-white shadow-lg rounded-lg overflow-hidden">
-      <div className="p-4 border-b flex justify-between items-center">
-        <div className="relative">
+    <div className="fixed bottom-16 sm:bottom-20 right-2 sm:right-5 w-[calc(100vw-1rem)] sm:w-7/12 h-[calc(100vh-8rem)] sm:h-5/6 bg-white shadow-lg rounded-lg overflow-hidden z-50">
+      <div className="p-3 sm:p-4 border-b flex justify-between items-center">
+        <div className="relative flex-1 mr-2">
           <select 
-            className="appearance-none p-2 pr-8 border rounded text-black font-bold"
+            className="appearance-none p-2 pr-6 sm:pr-8 border rounded text-black font-bold text-sm sm:text-base w-full"
             value={selectedTask}
             onChange={(e) => setSelectedTask(e.target.value)}
           >
@@ -109,11 +109,11 @@ const TaskBox = ({ onClose }) => {
             <option>Personal Errands</option>
             <option>Urgent To-Do</option>
           </select>
-          <ArrowDownIcon className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 pointer-events-none" />
+          <ArrowDownIcon className="absolute right-1 sm:right-2 top-1/2 transform -translate-y-1/2 text-gray-500 pointer-events-none" />
         </div>
         <div className="flex items-center">
           <button 
-            className="bg-blue-500 text-white px-4 py-2 rounded mr-2"
+            className="bg-blue-500 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded mr-1 sm:mr-2 text-xs sm:text-sm"
             onClick={() => setIsAddingNewTask(true)}
           >
             New Task
@@ -128,54 +128,55 @@ const TaskBox = ({ onClose }) => {
         </div>
       </div>
 
-      <div className="overflow-y-auto h-[calc(100%-64px)] p-4">
+      <div className="overflow-y-auto h-[calc(100%-64px)] p-3 sm:p-4">
         {isLoading ? (
           <div className="flex justify-center items-center h-full">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+            <div className="animate-spin rounded-full h-8 w-8 sm:h-12 sm:w-12 border-b-2 border-blue-500"></div>
           </div>
         ) : (
           <>
             {isAddingNewTask && (
-              <div className="mb-4 border-b pb-4 last:border-b-0">
+              <div className="mb-3 sm:mb-4 border-b pb-3 sm:pb-4 last:border-b-0">
                 <div className="flex items-start">
-                  <CreateIcon fontSize="small" className="mr-2 mt-2 text-gray-500" />
+                  <CreateIcon fontSize="small" className="mr-2 mt-2 text-gray-500 flex-shrink-0" />
                   <input 
                     type="text"
                     placeholder="Type Task Title"
-                    className="flex-grow p-2 border rounded text-black"
+                    className="flex-grow p-2 border rounded text-black text-sm sm:text-base"
                     value={newTask.title}
                     onChange={(e) => handleNewTaskChange('title', e.target.value)}
                   />
                 </div>
                 <div className="mt-2 flex items-center">
-                  <ScheduleIcon fontSize="small" className="mr-2 text-gray-500" />
+                  <ScheduleIcon fontSize="small" className="mr-2 text-gray-500 flex-shrink-0" />
                   <input
                     type="date"
-                    className="bg-white border border-gray-300 rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                    className="bg-white border border-gray-300 rounded-md px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                     value={newTask.dueDate ? formatDate(newTask.dueDate) : ''}
                     onChange={(e) => handleDateChange(e.target.value)}
                   />
                 </div>
                 <div className="mt-2 flex items-start">
-                  <CreateIcon fontSize="small" className="mr-2 mt-1 text-gray-500" />
+                  <CreateIcon fontSize="small" className="mr-2 mt-1 text-gray-500 flex-shrink-0" />
                   <textarea
                     placeholder="No Description"
-                    className="flex-grow p-2 border rounded text-black"
+                    className="flex-grow p-2 border rounded text-black text-sm sm:text-base"
                     value={newTask.description}
                     onChange={(e) => handleNewTaskChange('description', e.target.value)}
+                    rows="2"
                   />
                 </div>
-                <div className="flex justify-end mt-4">
+                <div className="flex justify-end mt-3 sm:mt-4 space-x-2">
                   <button 
-                    className="bg-blue-500 text-white px-4 py-2 rounded flex items-center"
+                    className="bg-blue-500 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded flex items-center text-xs sm:text-sm"
                     onClick={handleAddTask}
                   >
-                    <CreateIcon fontSize="small" className="mr-2" />
+                    <CreateIcon fontSize="small" className="mr-1 sm:mr-2" />
                     Add Task
                   </button>
                   <button 
-                    className="bg-red-500 text-white px-4 py-2 rounded flex items-center ml-2"
-                    onClick={() => setIsAddingNewTask(false)} // Cancel button functionality
+                    className="bg-red-500 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded flex items-center text-xs sm:text-sm"
+                    onClick={() => setIsAddingNewTask(false)}
                   >
                     Cancel
                   </button>
@@ -184,37 +185,37 @@ const TaskBox = ({ onClose }) => {
             )}
 
             {tasks.map((task) => (
-              <div key={task.id} className="mb-4 border-b pb-4 last:border-b-0">
+              <div key={task.id} className="mb-3 sm:mb-4 border-b pb-3 sm:pb-4 last:border-b-0">
                 <div className="flex items-start">
                   <input 
                     type="checkbox" 
-                    className="mt-1 mr-3 cursor-pointer" 
+                    className="mt-1 mr-2 sm:mr-3 cursor-pointer" 
                     checked={task.status === 'completed'} 
                     onChange={() => handleCheckboxClick(task.id)}
                   />
-                  <div className="flex-grow">
+                  <div className="flex-grow min-w-0">
                     <div className="flex justify-between items-start">
-                      <div>
-                        <h3 className={`font-medium text-black transition-all duration-300 ${
+                      <div className="flex-grow min-w-0">
+                        <h3 className={`font-medium text-black transition-all duration-300 text-sm sm:text-base ${
                           task.status === 'completed' 
                             ? 'line-through opacity-50' 
                             : 'no-underline opacity-100'
                         }`}>
                           {task.title}
                         </h3>
-                        <div className="flex items-center mt-2">
-                          <ScheduleIcon fontSize="small" className="mr-2 text-gray-500" />
+                        <div className="flex items-center mt-1 sm:mt-2">
+                          <ScheduleIcon fontSize="small" className="mr-1 sm:mr-2 text-gray-500 flex-shrink-0" />
                           <input
                             type="date"
-                            className="bg-white border border-gray-300 rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                            className="bg-white border border-gray-300 rounded-md px-2 sm:px-3 py-1 sm:py-2 text-xs sm:text-sm text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                             value={formatDate(task.dueDate)}
                             onChange={(e) => handleDateChange(e.target.value, task.id)}
                           />
                         </div>
                       </div>
-                      <div className="flex items-center">
+                      <div className="flex items-center flex-shrink-0 ml-2">
                         {task.status !== 'completed' && (
-                          <span className={`text-sm ${task.daysLeft <= 2 ? 'text-red-500' : 'text-gray-500'} mr-2`}>
+                          <span className={`text-xs sm:text-sm ${task.daysLeft <= 2 ? 'text-red-500' : 'text-gray-500'} mr-1 sm:mr-2`}>
                             {task.daysLeft} Days Left
                           </span>
                         )}
@@ -226,13 +227,13 @@ const TaskBox = ({ onClose }) => {
                             <MoreIcon fontSize="small" />
                           </button>
                           {menuOpenTaskId === task.id && (
-                            <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
+                            <div className="absolute right-0 mt-2 w-40 sm:w-48 bg-white rounded-md shadow-lg z-10">
                               <div className="py-1">
                                 <button
-                                  className="flex items-center px-4 py-2 text-sm text-red-600 hover:bg-red-100 w-full text-left"
+                                  className="flex items-center px-3 sm:px-4 py-2 text-xs sm:text-sm text-red-600 hover:bg-red-100 w-full text-left"
                                   onClick={() => handleDeleteTask(task.id)}
                                 >
-                                  <DeleteIcon fontSize="small" className="mr-2" />
+                                  <DeleteIcon fontSize="small" className="mr-1 sm:mr-2" />
                                   Delete Task
                                 </button>
                               </div>
@@ -241,9 +242,9 @@ const TaskBox = ({ onClose }) => {
                         </div>
                       </div>
                     </div>
-                    <div className="mt-2 text-sm text-gray-600">
+                    <div className="mt-2 text-xs sm:text-sm text-gray-600">
                       <div className="flex items-start">
-                        <div className="border rounded p-1 mr-2 cursor-pointer">
+                        <div className="border rounded p-1 mr-1 sm:mr-2 cursor-pointer flex-shrink-0">
                           <CreateIcon 
                             fontSize="small" 
                             className="text-gray-500"
@@ -257,10 +258,10 @@ const TaskBox = ({ onClose }) => {
                             onChange={(e) => handleDescriptionEdit(task.id, e.target.value)}
                             onBlur={() => setEditingTaskId(null)}
                             autoFocus
-                            className="w-full p-1 border rounded"
+                            className="w-full p-1 border rounded text-xs sm:text-sm"
                           />
                         ) : (
-                          <span>{task.description}</span>
+                          <span className="line-clamp-2">{task.description}</span>
                         )}
                       </div>
                     </div>
